@@ -24,6 +24,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/minio/minio/cmd/logger"
+	"github.com/minio/minio/cmd/logger/audit"
 	"github.com/minio/minio/pkg/event"
 	"github.com/minio/minio/pkg/event/target"
 	xnet "github.com/minio/minio/pkg/net"
@@ -44,7 +45,7 @@ var errNoSuchNotifications = errors.New("The specified bucket does not have buck
 func (api objectAPIHandlers) GetBucketNotificationHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := newContext(r, w, "GetBucketNotification")
 
-	defer logger.AuditLog(ctx, w, r)
+	defer audit.Log(w, r, "GetBucketNotification")
 
 	vars := mux.Vars(r)
 	bucketName := vars["bucket"]
@@ -102,7 +103,7 @@ func (api objectAPIHandlers) GetBucketNotificationHandler(w http.ResponseWriter,
 func (api objectAPIHandlers) PutBucketNotificationHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := newContext(r, w, "PutBucketNotification")
 
-	defer logger.AuditLog(ctx, w, r)
+	defer audit.Log(w, r, "PutBucketNotification")
 
 	objectAPI := api.ObjectAPI()
 	if objectAPI == nil {
@@ -164,7 +165,7 @@ func (api objectAPIHandlers) PutBucketNotificationHandler(w http.ResponseWriter,
 func (api objectAPIHandlers) ListenBucketNotificationHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := newContext(r, w, "ListenBucketNotification")
 
-	defer logger.AuditLog(ctx, w, r)
+	defer audit.Log(w, r, "ListenBucketNotification")
 
 	// Validate if bucket exists.
 	objAPI := api.ObjectAPI()

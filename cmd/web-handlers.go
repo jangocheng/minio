@@ -42,6 +42,7 @@ import (
 	"github.com/minio/minio/browser"
 	"github.com/minio/minio/cmd/crypto"
 	"github.com/minio/minio/cmd/logger"
+	"github.com/minio/minio/cmd/logger/audit"
 	"github.com/minio/minio/pkg/auth"
 	"github.com/minio/minio/pkg/dns"
 	"github.com/minio/minio/pkg/event"
@@ -707,7 +708,7 @@ func (web *webAPIHandlers) CreateURLToken(r *http.Request, args *WebGenericArgs,
 func (web *webAPIHandlers) Upload(w http.ResponseWriter, r *http.Request) {
 	ctx := newContext(r, w, "WebUpload")
 
-	defer logger.AuditLog(ctx, w, r)
+	defer audit.Log(w, r, "WebUpload")
 
 	objectAPI := web.ObjectAPI()
 	if objectAPI == nil {
@@ -849,7 +850,7 @@ func (web *webAPIHandlers) Upload(w http.ResponseWriter, r *http.Request) {
 func (web *webAPIHandlers) Download(w http.ResponseWriter, r *http.Request) {
 	ctx := newContext(r, w, "WebDownload")
 
-	defer logger.AuditLog(ctx, w, r)
+	defer audit.Log(w, r, "WebDownload")
 
 	var wg sync.WaitGroup
 	objectAPI := web.ObjectAPI()
@@ -1031,7 +1032,7 @@ func (web *webAPIHandlers) DownloadZip(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := newContext(r, w, "WebDownloadZip")
-	defer logger.AuditLog(ctx, w, r)
+	defer audit.Log(w, r, "WebDownloadZip")
 
 	var wg sync.WaitGroup
 	objectAPI := web.ObjectAPI()

@@ -259,6 +259,9 @@ var (
 	GlobalGatewaySSE []string
 	// GlobalGatewaySSEMode sse mode options
 	GlobalGatewaySSEMode []string
+
+	// Deployment ID - unique per deployment
+	globalDeploymentID string
 	// Add new variable global values here.
 
 )
